@@ -3,13 +3,15 @@ import { connect } from "react-redux";
 // NativeBase Components
 import { List, Content, Spinner } from "native-base";
 
-// Store
-import coffeeshops from "./list";
-
 // Component
 import CoffeeItem from "./CoffeeItem";
+import CartButton from "../CartButton";
 
 class CoffeeList extends Component {
+  static navigationOptions = {
+    title: "Coffee List",
+    headerRight: <CartButton />
+  };
   render() {
     const { coffeeShops, loading } = this.props.coffeeReducer;
     let shops;
@@ -18,7 +20,11 @@ class CoffeeList extends Component {
       return <Spinner />;
     }
     shops = coffeeShops.map(coffeeShop => (
-      <CoffeeItem coffeeShop={coffeeShop} key={coffeeShop.id} />
+      <CoffeeItem
+        coffeeShop={coffeeShop}
+        key={coffeeShop.id}
+        navigation={this.props.navigation}
+      />
     ));
 
     return (
